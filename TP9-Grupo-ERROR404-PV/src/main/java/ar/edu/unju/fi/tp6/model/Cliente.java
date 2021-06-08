@@ -2,7 +2,9 @@ package ar.edu.unju.fi.tp6.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -80,7 +84,13 @@ public class Cliente {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cta_id", nullable = false)
 	private Cuenta cuenta;
-	
+	////
+	@ManyToMany
+	@JoinTable(name = "clientes_beneficios",
+	joinColumns = @JoinColumn(name = "cli_id"), 
+	inverseJoinColumns = @JoinColumn(name = "ben_id"))
+	private List<Beneficio> beneficios = new ArrayList<Beneficio>();
+	///
 		
 	public Cliente() {
 		// TODO Auto-generated constructor stub
@@ -251,7 +261,18 @@ public class Cliente {
 		this.id = id;
 	}
 
+///
+	public List<Beneficio> getBeneficios() {
+		return beneficios;
+	}
 
+
+
+
+	public void setBeneficios(List<Beneficio> beneficios) {
+		this.beneficios = beneficios;
+	}
+	///
 
 	@Override
 	public String toString() {
