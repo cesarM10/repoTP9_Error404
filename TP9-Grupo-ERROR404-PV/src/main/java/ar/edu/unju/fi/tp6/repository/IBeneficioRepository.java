@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import ar.edu.unju.fi.tp6.model.Beneficio;
 
-public interface IBeneficioRepository extends CrudRepository<Beneficio , Integer>{
-	         public Beneficio findById(Long id);
+public interface IBeneficioRepository extends CrudRepository<Beneficio , Long>{
+	        
 }
