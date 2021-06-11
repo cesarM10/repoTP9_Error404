@@ -1,7 +1,6 @@
 package ar.edu.unju.fi.tp6.controller;
 
-import java.util.Optional;
-
+import java.util.List;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unju.fi.tp6.model.Beneficio;
 import ar.edu.unju.fi.tp6.model.Cliente;
+import ar.edu.unju.fi.tp6.service.IBeneficioService;
 import ar.edu.unju.fi.tp6.service.IClienteService;
 import ar.edu.unju.fi.tp6.service.imp.CompraServiceImp;
 
@@ -29,22 +30,46 @@ public class ClienteController {
 	@Qualifier("clienteServiceMysql")
 	private IClienteService clienteService;
 	
+	@Autowired
+	private Beneficio beneficio;
+	
+	@Autowired
+	private Cliente cliente;
+	
+	@Autowired
+	@Qualifier("beneficioServiceMysql")
+	private IBeneficioService beneficioService;
 	
 	@GetMapping("/cliente/nuevo")
 	public String getNuevoClientePage(Model model){
-		model.addAttribute("cliente", clienteService.getCliente());
-
+		model.addAttribute("cliente", cliente);
+		//lista que almacena los beneficio a asignar en el cliente.
+		model.addAttribute("beneficiosSeleccionados", beneficioService.listBeneficiosSeleccionados());
+		//lista que recupera los beneficos en de la tabla beneficios.
+		model.addAttribute("beneficios", beneficioService.obtenerBeneficios());
+		//entidad beneficio para realizar la agregacion a beneficiosSeleccionados
+		model.addAttribute("beneficio", beneficio);
 		return "nuevocliente";
 	}
 	
 	@PostMapping("/cliente/guardar")
-	public ModelAndView agregarClientePage(@Valid @ModelAttribute("cliente")Cliente cliente, BindingResult resultadoValidacion) {
+	public ModelAndView agregarClientePage(@Valid @ModelAttribute("cliente")Cliente cliente, @ModelAttribute("beneficio")Beneficio beneficio, BindingResult resultadoValidacion) {
 		ModelAndView model;
 		if(resultadoValidacion.hasErrors()) { //encontró errores.
 			model = new ModelAndView("nuevocliente");
+			
+			model.addObject("cliente", cliente);
+			//lista que almacena los beneficio a asignar en el cliente.
+			model.addObject("beneficiosSeleccionados", beneficioService.listBeneficiosSeleccionados());
+			//lista que recupera los beneficos en de la tabla beneficios.
+			model.addObject("beneficios", beneficioService.obtenerBeneficios());
+			//entidad beneficio para realizar la agregacion a beneficiosSeleccionados
+			model.addObject("beneficio", beneficio);
+			
 			return model;
 		}else { //no encontró errores.
 			model = new ModelAndView("clientes");
+			cliente.setBeneficios(beneficioService.listBeneficiosSeleccionados());
 			
 			clienteService.agregarCliente(cliente);
 			
@@ -67,9 +92,24 @@ public class ClienteController {
 	public ModelAndView getClienteEditPage(@PathVariable(value = "id")Long id) {
 		LOGGER.info("METODO - - EDITAR CLIENTE");
 		ModelAndView model = new ModelAndView("nuevocliente");
-		Optional <Cliente> cliente = clienteService.getClientePorId(id);
+				
+		List<Cliente> clientes = (List<Cliente>) clienteService.obtenerClientes();
 		
-		model.addObject("cliente", cliente);
+		for (Cliente clienteRepo : clientes) {
+			if(clienteRepo.getId() == id) {
+				//lista que almacena los beneficio a asignar en el cliente.
+				model.addObject("beneficiosSeleccionados", clienteRepo.getBeneficios());
+				model.addObject("cliente", clienteRepo);
+			}
+		}
+		
+		
+		
+		//lista que recupera los beneficos en de la tabla beneficios.
+		model.addObject("beneficios", beneficioService.obtenerBeneficios());
+		//entidad beneficio para realizar la agregacion a beneficiosSeleccionados
+		model.addObject("beneficio", beneficio);
+		
 		return model;
 	}
 	
