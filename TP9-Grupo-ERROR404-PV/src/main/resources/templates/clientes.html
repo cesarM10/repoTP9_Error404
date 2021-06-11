@@ -28,25 +28,13 @@
 									
 									
 									<th>Nro Doc</th>
-									
-									<th>Tip Doc</th>
-									
-									<th>N y Ap </th>
-									<th>E-mail</th>
-									<th>Password</th>
-									<th>Fecha Nac.</th>
+
+									<th>Nombre y Apellido </th>
 									<th>Edad</th>
-									<th>Telefono</th>
-									<th>F. Ult. compra</th>
-									<th>T. Ult. compra</th>
-									<th>T.F. de Nac.</th>
-									<th>T. prox. cumple</th>
+									<th>Fecha Ultima Compra</th>
+									<th>Estado de Cuenta</th>
 									
-									<th>ID Cuenta</th>
-									<th>Saldo</th>
-									<th>Fecha Creacion</th>
-									<th>Estado</th>
-									
+									<th>Beneficios</th>
 									
 									<th>Acciones </th>
 																	
@@ -55,29 +43,20 @@
 							<tbody>
 								<tr id="miTablaContenido" th:each = "cli:${cliente}">
 									
-									
-									
 									<td th:text="${cli.nroDocumento}"></td>
-									<td th:text="${cli.tipoDocumento}"></td>
 									
 									<td th:text="${cli.nombreApellido}"></td>
-									<td th:text="${cli.email}"></td>
-									<td th:text="${cli.password}"></td>
-									<td th:text="${#temporals.format(cli.fechaNacimiento,'dd/MM/yyyy')}"> </td>
 									<td th:text="${cli.getEdad}"></td>
-									<td th:text="${cli.codigoAreaTelefono} + ' - ' + ${cli.nroTelefono}"> </td>
 									<td th:text="${#temporals.format(cli.fechaUltimaCompra,'dd/MM/yyyy')}"> </td>
+									<td th:text="${cli.cuenta.estado}"> </td>
 									
-									<td th:text="${cli.calculoTiempoUltimaCompra}"></td>
-									<td th:text="${cli.calculoTiempoDesdeNacimiento} + ' dias'"></td>
-									<td th:text="${cli.calculoTiempoHastaCumple}"></td>		
+									<td>
+										<span th:each="ben:${cli.beneficios}">
+											<p th:text="${ben.id}+' - '+${ben.descripcion}"></p>
+										</span>
+									</td>																
 									
-									<td th:text="${cli.cuenta.id}"></td>
-									<td th:text="${cli.cuenta.saldo}"></td>
-									<td th:text="${#temporals.format(cli.cuenta.fechaCreacion,'dd/MM/yyyy')}"> </td>
-									<td th:text="${cli.cuenta.estado}"> </td>																
-									
-									
+									 
 									<td>
 										<a th:href="@{/cliente/editar/}+${cli.id}" class="btn btn-warning">Editar</a>
 										<a th:href="@{/cliente/eliminar/}+${cli.id}" class="btn btn-danger">Eliminar</a>

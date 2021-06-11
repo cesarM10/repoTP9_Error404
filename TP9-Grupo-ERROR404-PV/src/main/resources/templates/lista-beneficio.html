@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+		<title>Beneficios</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+		<link rel="stylesheet" th:href="@{/css/atn.css}">
+        <link rel="shortcut icon" href="/image/infectado.png">
+	</head>
+	<body>
+	
+		<header th:replace="layout/header :: header"></header>
+	
+		<div class="container">
+						
+			<div > 
+				<h1 style="font-family: century gothic;">Lista de Beneficios</h1>
+			</div>
+			
+			<div class="row">
+					<div class="col-sm-12 col-md"> 
+						
+						<table class="table table-hover" style="text-align: center; background-color: gray; color: white;">
+							<thead style="background-color: black;"> 
+								<tr id="miTablaEncabezado">
+									
+									
+									<th>ID Beneficio</th>
+									<th>Descripcion Beneficio</th>
+									<th>Nombre y Apellido </th>
+									
+																										
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="miTablaContenido" th:each = "ben:${beneficios}">
+									
+									<td th:text="${ben.id}"></td>
+									<td th:text="${ben.descripcion}"></td>
+									<td>	
+										<span th:each="cli:${ben.clientes}">
+											<p th:text="${cli.nombreApellido}"></p>
+										</span>
+									</td>																
+								</tr> 
+							</tbody>
+						
+						</table>
+						
+					</div>
+			
+					<div class="col col-md-2">
+						<aside th:replace="layout/publicidad :: publicidad"></aside>
+					</div>
+				</div>
+			
+		</div><br>
+			
+		<footer th:replace="layout/footer :: footer"></footer>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/popper.js/1.16.1-lts/popper.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.min.js}"></script>
+	</body>
+</html>
