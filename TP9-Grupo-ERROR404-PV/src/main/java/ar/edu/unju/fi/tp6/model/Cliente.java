@@ -85,6 +85,7 @@ public class Cliente {
 	@JoinColumn(name = "cta_id", nullable = false)
 	private Cuenta cuenta;
 	////
+	@Valid
 	@ManyToMany
 	@JoinTable(name = "clientes_beneficios",
 	joinColumns = @JoinColumn(name = "cli_id"), 
