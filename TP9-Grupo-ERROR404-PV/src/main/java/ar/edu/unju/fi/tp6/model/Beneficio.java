@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  */
 @Entity
 @Component
-@Table(name="BENEFICIOS")
+@Table(name="beneficios")
 public class Beneficio {
 	
 	@Id
@@ -38,11 +38,14 @@ public class Beneficio {
 	private List<Cliente> clientes = new ArrayList<Cliente>();
 	
 	public Beneficio() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public Beneficio(Long id, String descripcion) {
+	public Beneficio(Long id, String descripcion, List<Cliente> clientes) {
+		super();
 		this.id = id;
 		this.descripcion = descripcion;
+		this.clientes = clientes;
 	}
 
 	public Long getId() {
@@ -60,6 +63,14 @@ public class Beneficio {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
 
 	@Override
 	public String toString() {
@@ -67,5 +78,4 @@ public class Beneficio {
 	}
 	
 }
-	
-
+	 
