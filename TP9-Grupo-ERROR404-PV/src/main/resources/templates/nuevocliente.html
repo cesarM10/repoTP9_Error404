@@ -17,13 +17,81 @@
 		<div class="container">
 			<div class="row col-sm-12 col-md">
 		
-				<div class="col-sm12 col-md" style="border: solid;">
+				<div class="col-sm-12 col-md" style="border: solid;">
 					<h1 style="font-family: century gothic">Alta de un nuevo cliente</h1>
-				
+						
+						<div class="col-md-8 justify-content-left">
+							<form th:action="@{/beneficio/busqueda}" th:object="${beneficio}" method="GET" >
+								
+								<div class="form-group row">
+									<label for="id" class="col-sm-3 col-form-label">Beneficio </label>
+									<select id="id" th:field="*{id}">
+								      <option th:each = "b : ${beneficios}" selected
+								      th:value="${b.id}"
+								      th:text="${b.id} + ' - ' + ${b.descripcion}"
+								      th:selected="false"
+								      />
+								    </select>
+									
+									<div class = "form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></div>
+									
+									<div class="col-sm-4">							
+									<button type="submit" class="btn btn-primary">Agregar</button>
+									</div>
+								</div> 
+								
+								 
+								<!--  <div class = "form-text text-danger col-sm-10 offset-2" th:if="${mensajeError}" th:text="${mensajeError}"></div> -->
+							</form>
+						</div> 
+						
+						
+						
+						
+						
+						<!-- TABLA CON BENEFICIOS SELECCIONADOS -->
+					
+					<div class="col-sm-12 col-md-10"> 
+						<!--  <div class="scrollme">-->
+						<table class="table" style="text-align: center; background-color: gray; color: white;">
+							<thead style="background-color: black;"> 
+								<tr id="miTablaEncabezado">
+									
+									
+									<th>ID Beneficio</th>
+									<th>Descripcion </th>
+																		
+									<th>Acciones </th>
+																	
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="miTablaContenido" th:each = "benS:${beneficiosSeleccionados}">
+									
+									
+									
+									<td th:text="${benS.id}"></td>
+									<td th:text="${benS.descripcion}"></td>
+									
+									<td>
+										<a th:href="@{/beneficio/quitaropcion/}+${benS.id}" class="btn btn-danger">Quitar</a>
+									</td>
+									
+								</tr> 
+							</tbody>
+						
+						</table>
+						<!--  </div> -->
+					</div>
+						
+						
+						
+						
+						
 						<form th:action="@{/cliente/guardar}" method="post" th:object="${cliente}" >
 							
-							<input type="hidden" th:field="*{id}"> 
-							<input type="hidden" th:field="*{cuenta.id}">	
+							<input type="hidden" th:field="*{id}">  
+							<input type="hidden" th:field="*{cuenta.id}">
 							
 							<div class="form-group ">
 								<label for="tipoDocumento">Tipo de Documento</label>
