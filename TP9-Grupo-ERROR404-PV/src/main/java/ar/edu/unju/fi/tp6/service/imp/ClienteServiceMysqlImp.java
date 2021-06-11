@@ -1,5 +1,6 @@
 package ar.edu.unju.fi.tp6.service.imp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,8 @@ import ar.edu.unju.fi.tp6.service.IClienteService;
 
 @Service("clienteServiceMysql")
 public class ClienteServiceMysqlImp implements IClienteService{
+
+	List<Cliente> clientesEncontrados = new ArrayList<Cliente>();
 	
 	@Autowired
 	private Cliente cliente;
