@@ -53,7 +53,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/cliente/guardar")
-	public ModelAndView agregarClientePage(@Valid @ModelAttribute("cliente")Cliente cliente, @ModelAttribute("beneficio")Beneficio beneficio, BindingResult resultadoValidacion) {
+	public ModelAndView agregarClientePage(@Valid @ModelAttribute("cliente")Cliente cliente, BindingResult resultadoValidacion, @ModelAttribute("beneficio")Beneficio beneficio) {
 		ModelAndView model;
 		if(resultadoValidacion.hasErrors()) { //encontró errores.
 			model = new ModelAndView("nuevocliente");
